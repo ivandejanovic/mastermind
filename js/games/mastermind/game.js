@@ -27,12 +27,15 @@
                 [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ] ];
         this.results = [ [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ],
                 [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ] ];
-        this.aiSequence = [ 1, 1, 1, 1 ];
+        this.aiSequence = [ 2, 2, 2, 2 ];
+        this.aiSequenceUsed = [false, false, false, false];
         this.inputSequence = [ 1, 1, 1, 1 ];
+        this.inputSequenceUsed = [false, false, false, false];
         this.message = message;
         this.inProgress = true;
         this.nextInputIndex = 0;
         this.nextChoicesIndex = 0;
+        this.nextSubChoicesIndex = 0;
     };
 
     // method for drawing complete board
@@ -47,11 +50,11 @@
 
     // method for drawing choice circles
     gameObj.drawChoiceCircles = function() {
-        var x = this.drawUnit * 4;
-        var y = this.drawUnit * 4;
-        var radius = this.drawUnit * 3;
-        var index = 2;
-        var increment = this.drawUnit * 8;
+        var x = this.drawUnit * 4,
+            y = this.drawUnit * 4,
+            radius = this.drawUnit * 3,
+            index = 2,
+            increment = this.drawUnit * 8;
 
         while (index < 8) {
             this.drawCircle(x, y, radius, this.styles[index]);
@@ -62,13 +65,14 @@
 
     // method for drawing game user choices
     gameObj.drawChoices = function() {
-        var x = this.drawUnit * 16;
-        var y = this.drawUnit * 4;
-        var radius = this.drawUnit * 3;
-        var increment = this.drawUnit * 8;
-        var numStyles = this.choices.length;
-        var numInStyle = this.choices[0].length;
-        var i, j;
+        var x = this.drawUnit * 16,
+            y = this.drawUnit * 4,
+            radius = this.drawUnit * 3,
+            increment = this.drawUnit * 8,
+            numStyles = this.choices.length,
+            numInStyle = this.choices[0].length,
+            i,
+            j;
 
         for (i = 0; i < numStyles; ++i) {
             x = this.drawUnit * 16;
@@ -84,13 +88,13 @@
 
     // method for drawing game results
     gameObj.drawResults = function() {
-        var x1 = this.drawUnit * 46;
-        var x2 = this.drawUnit * 48;
-        var y = this.drawUnit * 3;
-        var radius = this.drawUnit;
-        var increment = this.drawUnit * 8;
-        var numResults = this.results.length;
-        var index = 0;
+        var x1 = this.drawUnit * 46,
+            x2 = this.drawUnit * 48,
+            y = this.drawUnit * 3,
+            radius = this.drawUnit,
+            increment = this.drawUnit * 8,
+            numResults = this.results.length,
+            index = 0;
 
         while (index < numResults) {
             this.drawCircle(x1, y, this.drawUnit,
@@ -109,12 +113,12 @@
 
     // method for drawing computer sequence
     gameObj.drawAiSequence = function(inProgress) {
-        var x = this.drawUnit * 16;
-        var y = this.drawUnit * 56;
-        var radius = this.drawUnit * 3;
-        var increment = this.drawUnit * 8;
-        var index = 0;
-        var numAiSequence = this.aiSequence.length;
+        var x = this.drawUnit * 16,
+            y = this.drawUnit * 56,
+            radius = this.drawUnit * 3,
+            increment = this.drawUnit * 8,
+            index = 0,
+            numAiSequence = this.aiSequence.length;
 
         while (index < numAiSequence) {
             this.drawCircle(x, y, radius, inProgress ? this.styles[1]
@@ -126,14 +130,13 @@
 
     // method for drawing input sequence
     gameObj.drawInputSequence = function() {
-        var x = this.drawUnit * 16;
-        var y = this.drawUnit * 64;
-        var radius = this.drawUnit * 3;
-        var increment = this.drawUnit * 8;
-        var index = 0;
-        var numInputSequence = this.inputSequence.length;
+        var x = this.drawUnit * 16,
+            y = this.drawUnit * 64,
+            radius = this.drawUnit * 3,
+            increment = this.drawUnit * 8,
+            index = 0;
 
-        while (index < numInputSequence) {
+        while (index < this.inputSequence.length) {
             this.drawCircle(x, y, radius,
                     this.styles[this.inputSequence[index]]);
             x += increment;
@@ -195,14 +198,35 @@
     // method that add input to choices
     gameObj.addInputToChoices = function() {
         var index = 0;
-        for (index = 0; index < this.inputSequence.lenght; ++index) {
-
+        while ( index < this.inputSequence.length) {
+            this.choices[this.nextChoicesIndex][index] = this.inputSequence[index];
+            ++index;
         }
+    };
+    
+    // method that matches inputs in correct place
+    gameObj.matchInPlace = function() {
+        var index = 0;
+        while (index < this.inputSequence.length) {
+            if (this.aiSequence[index] === this.inputSequence[index]) {
+                this.results[this.nextChoicesIndex][this.nextSubChoicesIndex] = 0;
+                this.aiSequenceUsed[index] = true;
+                this.inputSequenceUsed[index] = true;
+                ++this.nextSubChoicesIndex;
+            }
+            ++index;
+        }
+    };
+    
+    //method that matches inputs not in correct place
+    gameObj.matchOutOfPlace = function() {
+        
     };
 
     // method that calculate result for submitted choices
     gameObj.calculateResults = function() {
-
+        this.matchInPlace();
+        this.matchOutOfPlace();
     };
 
     // method that process click on choice circles
@@ -216,8 +240,10 @@
     // method that process click on submit button
     gameObj.submitButtonHandler = function() {
         if (this.nextInputIndex >= 4) {
+            this.nextSubChoicesIndex = 0;
             this.addInputToChoices();
             this.calculateResults();
+            ++this.nextChoicesIndex;
             this.clearButtonHandler();
         }
     };
@@ -261,9 +287,9 @@
 
     // method for handling click on board
     gameObj.handleBoardClick = function(evt) {
-        var rect = this.canvas.getBoundingClientRect();
-        var x = evt.clientX - rect.left;
-        var y = evt.clientY - rect.top;
+        var rect = this.canvas.getBoundingClientRect(),
+            x = evt.clientX - rect.left,
+            y = evt.clientY - rect.top;
 
         this.handleClick(x, y);
     };
