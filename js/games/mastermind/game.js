@@ -27,7 +27,7 @@
                 [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ] ];
         this.results = [ [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ],
                 [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ] ];
-        this.aiSequence = [ 2, 2, 2, 2 ];
+        this.aiSequence = [ 2, 2, 3, 3 ];
         this.aiSequenceUsed = [false, false, false, false];
         this.inputSequence = [ 1, 1, 1, 1 ];
         this.inputSequenceUsed = [false, false, false, false];
@@ -204,6 +204,17 @@
         }
     };
     
+    //method that clears used sequences
+    gameObj.clearUsedSequences = function() {
+        var index = 0;
+        
+        while (index < this.inputSequenceUsed.length) {
+            this.inputSequenceUsed[index] = false;
+            this.aiSequenceUsed[index] = false;
+            ++index;
+        }
+    };
+    
     // method that matches inputs in correct place
     gameObj.matchInPlace = function() {
         var index = 0;
@@ -220,11 +231,31 @@
     
     //method that matches inputs not in correct place
     gameObj.matchOutOfPlace = function() {
+        var aiIndex = 0,
+            inputIndex = 0;
         
+        while (aiIndex < this.inputSequence.length) {
+            while (inputIndex < this.inputSequence.length) {
+                if (aiIndex !== inputIndex &&
+                        this.aiSequenceUsed[aiIndex] === false &&
+                        this.inputSequenceUsed[inputIndex] === false) {
+                    if (this.aiSequence[aiIndex] === this.inputSequence[inputIndex]) {
+                        this.results[this.nextChoicesIndex][this.nextSubChoicesIndex] = 4;
+                        this.aiSequenceUsed[aiIndex] = true;
+                        this.inputSequenceUsed[inputIndex] = true;
+                        ++this.nextSubChoicesIndex;
+                    }
+                }
+                ++inputIndex;
+            }
+            inputIndex = 0;
+            ++aiIndex;
+        }
     };
 
     // method that calculate result for submitted choices
     gameObj.calculateResults = function() {
+        this.clearUsedSequences();
         this.matchInPlace();
         this.matchOutOfPlace();
     };
