@@ -14,6 +14,9 @@
 
     // Setup game object that will jeep game state
     gameObj.initialize = function(canvas, message) {
+        var index = 0;
+        
+        //drawing
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
         canvas.height = canvas.clientHeight;
@@ -23,11 +26,13 @@
         this.drawUnit = this.width / 50;
         this.styles = [ '#000000', '#cccccc', '#ffff00', '#ffa500', '#ff0000',
                 '#00ff00', '#0000ff', '#8c489f' ];
+        
+        //game state
         this.choices = [ [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ],
                 [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ] ];
         this.results = [ [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ],
                 [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 1 ] ];
-        this.aiSequence = [ 2, 2, 3, 3 ];
+        this.aiSequence = [];
         this.aiSequenceUsed = [false, false, false, false];
         this.inputSequence = [ 1, 1, 1, 1 ];
         this.inputSequenceUsed = [false, false, false, false];
@@ -36,6 +41,12 @@
         this.nextInputIndex = 0;
         this.nextChoicesIndex = 0;
         this.nextSubChoicesIndex = 0;
+        
+        //randomize aiSequence
+        while (index < 4) {
+            this.aiSequence.push(Math.floor(Math.random() * 6) + 2);
+            ++index;
+        }
     };
 
     // method for drawing complete board
@@ -252,12 +263,34 @@
             ++aiIndex;
         }
     };
+    
+    //method for checking if game is over
+    gameObj.checkInProgress = function() {
+        var index = 0;
+        this.inProgress = false;
+        
+        while (index <  this.results[this.nextChoicesIndex].length) {
+            if (this.results[this.nextChoicesIndex][index] !== 0) {
+                this.inProgress = true;
+                break;
+            }
+            ++index;
+        }
+        
+        if (!this.inProgress) {
+            this.message.innerHTML = 'Congratulations';
+        } else if (this.nextChoicesIndex === 5) {
+            this.inProgress = false;
+            this.message.innerHTML = 'Sorry';
+        }
+    };
 
     // method that calculate result for submitted choices
     gameObj.calculateResults = function() {
         this.clearUsedSequences();
         this.matchInPlace();
         this.matchOutOfPlace();
+        this.checkInProgress();
     };
 
     // method that process click on choice circles
@@ -288,7 +321,7 @@
 
     // method that process click on given coordinates
     gameObj.handleClick = function(x, y) {
-        if (x >= this.drawUnit && x <= this.drawUnit * 7) {
+        if (this.inProgress && x >= this.drawUnit && x <= this.drawUnit * 7) {
             if (y >= this.drawUnit * 61 && y <= this.drawUnit * 67) {
                 this.clearButtonHandler();
             } else if (this.nextInputIndex >= 4 && y >= this.drawUnit * 53
