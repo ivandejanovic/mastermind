@@ -361,7 +361,7 @@
     // method for handling resize event
     gameObj.handleResize = function() {
         this.canvas.height = this.canvas.clientHeight;
-        this.canvaswidth = this.canvas.clientWidth;
+        this.canvas.width = this.canvas.clientWidth;
         this.height = this.canvas.height;
         this.width = this.canvas.width;
         this.drawUnit = this.width / 50;
