@@ -4,6 +4,16 @@
   "launch_path": "/mastermind.htm",
   "version": "1.0.0",
   "icons": {
+    "16": "/images/games/mastermind16.png",
+    "30": "/images/games/mastermind30.png",
+    "32": "/images/games/mastermind32.png",
+    "48": "/images/games/mastermind48.png",
+    "60": "/images/games/mastermind60.png",
+    "64": "/images/games/mastermind64.png",
+    "90": "/images/games/mastermind90.png",
+    "120": "/images/games/mastermind120.png",
+    "128": "/images/games/mastermind128.png",
+    "256": "/images/games/mastermind256.png"
   },
   "developer": {
     "name": "Quine Interactive",
