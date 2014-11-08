@@ -1,8 +1,8 @@
 {
-  "name": "",
+  "name": "Mastermind",
   "description": "This is a HTML5 implementation of and old board game. Mastermind is games in which computer chooses at random a sequence of colors based on a user settings and the player has several tries to guess the correct order in the sequence. For each try the user receives a feed back how many color in the sequence he entered are of the same color and place as within computer chosen sequence and how many are present but on a wrong place. Once the user guess the correct sequence or uses all tries the game ends.",
-  "launch_path": "/mastermind.htm",
-  "version": "1.0.0",
+  "launch_path": "/games/mastermind/mastermind.htm",
+  "version": "1.0.1",
   "icons": {
     "16": "/images/games/mastermind16.png",
     "30": "/images/games/mastermind30.png",
@@ -17,7 +17,7 @@
   },
   "developer": {
     "name": "Quine Interactive",
-    "url": "http://www.quineinteractive.com"
+    "url": "http://quineinteractive.com"
   },
   "default_locale": "en"
 }

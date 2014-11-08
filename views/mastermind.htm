@@ -1,89 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Mastermind</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta name="description" content="Quine Interactive is one man's journey through turbulent waters of open source and modern web">
-        <meta name="keywords" content="software, development, software development, web, web development, web application, open source, html5">
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="../css/quine/firefoxOs.css">
-        <link rel="stylesheet" href="../css/games/mastermind.css">
-    </head>
-    <body>
-        <div id="main_container">Loading...</div>
-        <script id="index-template" type="text/x-handlebars-template">
-            <h2>
-                <p>
-                    Mastermind
-                </p>
-            </h2>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="#play">Play</a>
-                    </li>
-                    <li>
-                        <a href="#instructions">Instructions</a>
-                    </li>
-                    <li>
-                        <a href="#about">About</a>
-                    </li>
-                </ul>
-            </nav>
-        </script>
-        <script id="play-template" type="text/x-handlebars-template">
-            <h2>
-                <img id="backPlay" src="../images/quine/common-back.png"/>
-                <p>
-                    Play
-               </p>
-            </h2>
-            <canvas id="board"></canvas>
-            <p id="message">Click on the grid to play</p>
-        </script>
-        <script id="instructions-template" type="text/x-handlebars-template">
-            <h2>
-                <img id="backInstructions" src="../images/quine/common-back.png"/>
-                <p>
-                    Instructions
-                </p>
-            </h2>
-            <article>
-                <p>
-                    Computer chooses at random a sequence and the player has several tries
-                    to guess the correct order in the sequence. For each try the user
-                    receives a feedback how many colors in the sequence he entered are of
-                    the same color and place as within computer chosen sequence and how
-                    many are present but on a wrong place. Once the user guess the correct
-                    sequence or uses all tries the game ends. 
-                </p> 
-            </article>
-        </script>
-        <script id="about-template" type="text/x-handlebars-template">
-            <h2>
-                <img id="backAbout" src="../images/quine/common-back.png"/>
-                <p>
-                    About
-                </p>
-            </h2>
-            <article>
-                <p>
-                    Developed by: Quine Interactive
-                </p>
-                <p>
-                    (www.quineinteractive.com)
-                </p>
-                <p>
-                     Version 1.0.0: Initial release.
-                </p>
-            </article>
-        </script>
-        <script type="text/javascript" src="../js/libs/json2.js"></script>
-        <script type="text/javascript" src="../js/libs/jquery-2.0.3.min.js"></script>
-        <script type="text/javascript" src="../js/libs/underscore-min-1.5.2.js"></script>
-        <script type="text/javascript" src="../js/libs/backbone-min-1.1.0.js"></script>
-        <script type="text/javascript" src="../js/libs/handlebars-v1.1.2.js"></script>
-        <script type="text/javascript" src="../js/games/mastermind/game.js"></script>
-        <script type="text/javascript" src="../js/games/mastermind/app.js"></script>
-    </body>
+<html lang="en" manifest="manifest.appcache">
+  <head>
+    <title>Mastermind</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Quine Interactive is one man's journey through turbulent waters of open source and modern web">
+    <meta name="keywords" content="software, development, software development, web, web development, web application, open source, html5">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/quine/firefoxOs.css">
+    <link rel="stylesheet" href="../css/games/mastermind.css">
+  </head>
+  <body>
+    <div id="main_container">Loading...</div>
+    <script id="index-template" type="text/x-handlebars-template">
+      <h2>
+        <p>
+          Mastermind
+        </p>
+      </h2>
+      <nav>
+        <ul>
+          <li>
+            <a href="#play">Play</a>
+          </li>
+          <li>
+            <a href="#instructions">Instructions</a>
+          </li>
+          <li>
+            <a href="#about">About</a>
+          </li>
+        </ul>
+      </nav>
+    </script>
+    <script id="play-template" type="text/x-handlebars-template">
+      <h2>
+        <img id="backPlay" src="../images/quine/common-back.png"/>
+        <p>
+          Play
+        </p>
+      </h2>
+      <canvas id="board"></canvas>
+      <p id="message">Click on the grid to play</p>
+    </script>
+    <script id="instructions-template" type="text/x-handlebars-template">
+      <h2>
+        <img id="backInstructions" src="../images/quine/common-back.png"/>
+        <p>
+          Instructions
+        </p>
+      </h2>
+      <article>
+        <p>
+          Computer chooses at random a sequence and the player has several tries
+          to guess the correct order in the sequence. For each try the user
+          receives a feedback how many colors in the sequence he entered are of
+          the same color and place as within computer chosen sequence and how
+          many are present but on a wrong place. Once the user guess the correct
+          sequence or uses all tries the game ends. 
+        </p> 
+      </article>
+    </script>
+    <script id="about-template" type="text/x-handlebars-template">
+      <h2>
+        <img id="backAbout" src="../images/quine/common-back.png"/>
+        <p>
+          About
+        </p>
+      </h2>
+      <article>
+        <p>
+          Developed by: <a target="_blank" href="http://quineinteractive.com">Quine Interactive</a>
+        </p>
+        <p>
+          Version 1.0.1: Updated dependencies.
+        </p>
+        <p>
+          Version 1.0.0: Initial release.
+        </p>
+      </article>
+    </script>
+    <script type="text/javascript" src="../js/libs/json2.js"></script>
+    <script type="text/javascript" src="../js/libs/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/libs/underscore-min-1.7.0.js"></script>
+    <script type="text/javascript" src="../js/libs/backbone-min-1.1.2.js"></script>
+    <script type="text/javascript" src="../js/libs/handlebars-v2.0.0.js"></script>
+    <script type="text/javascript" src="../js/games/mastermind/game.js"></script>
+    <script type="text/javascript" src="../js/games/mastermind/app.js"></script>
+  </body>
 </html>

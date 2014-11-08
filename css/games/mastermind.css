@@ -1,56 +1,56 @@
 canvas {
-    width: 250px;
-    height: 350px;
-    display: block;
-    margin: 20px auto;
+  width: 250px;
+  height: 350px;
+  display: block;
+  margin: 20px auto;
 }
 
 #message {
-    text-align: center;
+  text-align: center;
 }
 
 #main_container .selected {
-    background: #00aacc;
+  background: #00aacc;
 }
 
 @media screen and (min-width: 350px) and (min-height: 550px) {
-	canvas {
-		width: 250px;
-		height: 350px;
-	}
+  canvas {
+    width: 250px;
+    height: 350px;
+  }
 }
 
 @media screen and (min-width: 400px) and (min-height: 620px) {
-	canvas {
-		width: 300px;
-		height: 420px;
-	}
+  canvas {
+    width: 300px;
+    height: 420px;
+  }
 }
 
 @media screen and (min-width: 450px) and (min-height: 690px) {
-	canvas {
-		width: 350px;
-		height: 490px;
-	}
+  canvas {
+    width: 350px;
+    height: 490px;
+  }
 }
 
 @media screen and (min-width: 500px) and (min-height: 760px) {
-	canvas {
-		width: 400px;
-		height: 560px;
-	}
+  canvas {
+    width: 400px;
+    height: 560px;
+  }
 }
 
 @media screen and (min-width: 550px) and (min-height: 830px) {
-	canvas {
-		width: 450px;
-		height: 630px;
-	}
+  canvas {
+    width: 450px;
+    height: 630px;
+  }
 }
 
 @media screen and (min-width: 600px) and (min-height: 900px) {
-	canvas {
-		width: 500px;
-		height: 700px;
-	}
+  canvas {
+    width: 500px;
+    height: 700px;
+  }
 }
