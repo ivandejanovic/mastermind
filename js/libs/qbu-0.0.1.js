@@ -1,5 +1,5 @@
 /*
- * Quine Backbone Utility
+ * Quine Backbone Utility 0.0.1
  *
  * The MIT License (MIT)
  *
@@ -25,28 +25,38 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- *
- *
- * author: Ivan Dejanovic
  */
 
-(function($) {
-  // Create qbu object that will serve as namespace
-  var qbu = window.QuineBackboneUtility || {};
-  
-  // Set qbu to global scope
-  window.QuineBackboneUtility = qbu;
-  
+(function(root, factory) {
+  // Set up QuineBackboneUtility appropriately for the environment. Start with AMD.
+  if (typeof define === 'function' && define.amd) {
+    define(['underscore', 'jquery', 'exports'], function(_, $, exports) {
+      // Export global even in AMD case in case this script is loaded with
+      // others that may still expect a global QuineBackboneUtility.
+      root.QuineBackboneUtility = factory(root, exports, (root.jQuery || root.Zepto || root.ender || root.$), root.Handlebars, root._, root.Backbone);
+    });
+
+  // Next for Node.js or CommonJS.
+  } else if (typeof exports !== 'undefined') {
+    var $ = require('jQuery')
+      , Handlebars = require('Handlebars')
+      , _ = require('underscore')
+      , Backbone = require('Backbone');
+    factory(root, exports, $, Handlebars, _, Backbone);
+
+  // Finally, as a browser global.
+  } else {
+    root.QuineBackboneUtility = factory(root, {}, (root.jQuery || root.Zepto || root.ender || root.$), root.Handlebars, root._, root.Backbone);
+  }
+
+}(this, function(root, QuineBackboneUtility, $, Handlebars,  _, Backbone) { 
   // Template helper function
-  qbu.template = function(name) {
+  QuineBackboneUtility.template = function(name) {
     return Handlebars.compile($('#' + name + '-template').html());
   };
   
   // Create basic QBU view
-  qbu.QBUView = Backbone.View.extend({
-    defaults : {
-      model : {}
-    },
+  QuineBackboneUtility.QBUView = Backbone.View.extend({
     preRender : function() {
       
     },
@@ -60,13 +70,17 @@
       this.preRender();
       this.renderModel();
       this.postRender();
+      
+      return this;
     }
   });
   
   // Create view that can handle back
-  qbu.BackQBUView = qbu.QBUView.extend({
+  QuineBackboneUtility.BackQBUView = QuineBackboneUtility.QBUView.extend({
     handleBackClick : function() {
       window.history.back();
     }
   });
-}(jQuery));
+  
+  return QuineBackboneUtility;
+})());
