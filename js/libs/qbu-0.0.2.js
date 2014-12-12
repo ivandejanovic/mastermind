@@ -1,5 +1,5 @@
 /*
- * Quine Backbone Utility 0.0.1
+ * Quine Backbone Utility 0.0.2
  *
  * The MIT License (MIT)
  *
@@ -49,7 +49,7 @@
     root.QuineBackboneUtility = factory(root, {}, (root.jQuery || root.Zepto || root.ender || root.$), root.Handlebars, root._, root.Backbone);
   }
 
-}(this, function(root, QuineBackboneUtility, $, Handlebars,  _, Backbone) { 
+}(this, function(root, QuineBackboneUtility, $, Handlebars,  _, Backbone) {
   // Template helper function
   QuineBackboneUtility.template = function(name) {
     return Handlebars.compile($('#' + name + '-template').html());
@@ -63,24 +63,43 @@
     postRender : function() {
       
     },
-    renderModel : function() {
-      this.$el.html(this.template(this.model));
+    renderData : function(data) {
+      this.$el.html(this.template(data));
+    },
+    serializeData: function() {
+      return {};
     },
     render : function() {
       this.preRender();
-      this.renderModel();
+      this.renderData(this.serializeData());
       this.postRender();
       
       return this;
     }
   });
   
+  //Create basic QBU item view
+  QuineBackboneUtility.QBUItemView = QuineBackboneUtility.QBUView.extend({
+    model : new Backbone.Model(),
+    serializeData : function() {
+      return this.model.toJSON();
+    }
+  });
+  
+  //Create basic QBU collection view
+  QuineBackboneUtility.QBUCollectionView = QuineBackboneUtility.QBUView.extend({
+    collection : new Backbone.Collection(),
+    serializeData : function() {
+      return {collection : this.collection.toJSON()};
+    }
+  });
+  
   // Create view that can handle back
-  QuineBackboneUtility.BackQBUView = QuineBackboneUtility.QBUView.extend({
+  QuineBackboneUtility.BackQBUView = QuineBackboneUtility.QBUItemView.extend({
     handleBackClick : function() {
       window.history.back();
     }
   });
   
   return QuineBackboneUtility;
-})());
+}));

@@ -59,7 +59,7 @@
       'about' : 'about'
     },
     initialize : function(options) {
-      this.indexView = new app.IndexView();
+      this.indexView = new app.IndexView();+
       this.playView = new app.PlayView();
       this.instructionsView = new app.InstructionsView();
       this.aboutView = new app.AboutView();
