@@ -6,23 +6,23 @@
   window.app = app;
 
   // Create basic view
-  app.BasicView = QuineBackboneUtility.BackQBUView.extend({
+  app.BasicView = Atlas.BackView.extend({
     el : '#main_container'
   });
 
   // Create index view
   app.IndexView = app.BasicView.extend({
-    template : QuineBackboneUtility.template('index')
+    template : Atlas.template('index')
   });
 
   // Create play view
   app.PlayView = app.BasicView.extend({
-    template : QuineBackboneUtility.template('play'),
+    template : Atlas.template('play'),
     events : {
       'click #backPlay' : 'handleBackClick',
       'click #board' : 'handleBoardClick'
     },
-    postRender : function() {
+    onRender : function() {
       var message = document.getElementById('message');
       var canvas = document.getElementById('board');
 
@@ -36,7 +36,7 @@
 
   // Create instructions view
   app.InstructionsView = app.BasicView.extend({
-    template : QuineBackboneUtility.template('instructions'),
+    template : Atlas.template('instructions'),
     events : {
       'click #backInstructions' : 'handleBackClick'
     }
@@ -44,7 +44,7 @@
 
   // Create about view
   app.AboutView = app.BasicView.extend({
-    template : QuineBackboneUtility.template('about'),
+    template : Atlas.template('about'),
     events : {
       'click #backAbout' : 'handleBackClick'
     }
@@ -59,7 +59,7 @@
       'about' : 'about'
     },
     initialize : function(options) {
-      this.indexView = new app.IndexView();+
+      this.indexView = new app.IndexView();
       this.playView = new app.PlayView();
       this.instructionsView = new app.InstructionsView();
       this.aboutView = new app.AboutView();
