@@ -1,12 +1,12 @@
-(function($) {
+(function(root, Atlas) {
   // Create app object to serve as namespace.
-  var app = window.app || {};
+  var app = root.app || {};
 
   // Set app object to global scope.
-  window.app = app;
+  root.app = app;
 
   // Create basic view
-  app.BasicView = Atlas.BackView.extend({
+  app.BasicView = Atlas.View.extend({
     el : '#main_container'
   });
 
@@ -51,7 +51,7 @@
   });
 
   // Create router
-  var Router = Backbone.Router.extend({
+  var Router = Atlas.Router.extend({
     routes : {
       '' : 'index',
       'play' : 'play',
@@ -89,7 +89,7 @@
   }
 
   // bind handlers to actions
-  window.addEventListener('resize', windowResizeHandler, false);
+  root.addEventListener('resize', windowResizeHandler, false);
 
-  Backbone.history.start();
-}(jQuery));
+  Atlas.history.start();
+}(window, window.Atlas));

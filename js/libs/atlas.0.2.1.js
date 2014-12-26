@@ -1,9 +1,9 @@
 /*
- * Atlas 0.1.1
+ * Atlas 0.2.1
  *
  * The MIT License (MIT)
  *
- * Copyright 2014-2014 Ivan Dejanovic and Quine Interactive
+ * Copyright 2008-2014 Ivan Dejanovic and Quine Interactive
  * www.quineinteractive.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -53,7 +53,18 @@
   // Basic setup.
   var previousVersion = root.Atlas;
   
-  Atlas.VERSION = '0.1.1';
+  Atlas.VERSION = '0.2.1';
+  
+  // Set references.
+  Atlas.$ = $;
+  Atlas.Handlebars = Handlebars;
+  Atlas._ = _;
+  Atlas.Backbone = Backbone;
+  Atlas.Events = Backbone.Events;
+  Atlas.Model = Backbone.Model;
+  Atlas.Collection = Backbone.Collection;
+  Atlas.Router = Backbone.Router;
+  Atlas.history = Backbone.history;
   
   Atlas.noConflict = function() {
     root.Atlas = previousVersion;
@@ -75,12 +86,15 @@
     onRender : function(options) {
       
     },
+    // Render serialized data.
     renderData : function(data, options) {
       this.$el.html(this.template(data));
     },
+    // Serialize data to be rendered.
     serializeData: function(options) {
       return {};
     },
+    // Render method.
     render : function(options) {
       this.beforeRender(options);
       this.renderData(this.serializeData(options), options);
@@ -88,18 +102,31 @@
       
       return this;
     },
+    // Default debounce interval. Reimplement if different interval is needed.
+    debounceInterval : 100,
+    // Debounced render method.
+    debounceRender : _.debounce(function(){
+      return this.render();
+    }, this.debounceInterval),
     // This function should be reimplemented if some action need to be taken before closing a view.
     beforeClose : function(options) {
       
     },
-    // This function should be reimplemented if some action need to be taken after closing a view.
+    // This method should be reimplemented if some action need to be taken after closing a view.
     onClose : function(options){
       
     },
+    // Close method that properly clears resources.
     close : function(options) {
       this.beforeClose(options);
       this.remove(options);
       this.onClose(options);
+      
+      return this;
+    },
+    // History back handler.
+    handleBackClick : function() {
+      root.history.back();
     }
   });
   
@@ -108,13 +135,6 @@
     model : new Backbone.Model(),
     serializeData : function(options) {
       return this.model.toJSON();
-    }
-  });
-
-  //Create view that can handle browser back click
-  Atlas.BackView = Atlas.ItemView.extend({
-    handleBackClick : function() {
-      root.history.back();
     }
   });
   
@@ -153,6 +173,8 @@
       this.clearChildren(options);
       this.remove(options);
       this.onClose(options);
+      
+      return this;
     }
   });
   
@@ -166,6 +188,8 @@
       this.view = view;
       this.view.render(options);
       this.$el.append(this.view.$el);
+      
+      return this;
     }
   });
   
