@@ -1,5 +1,5 @@
 /*
- * Atlas 0.2.1
+ * Atlas 0.2.3
  *
  * The MIT License (MIT)
  *
@@ -53,7 +53,7 @@
   // Basic setup.
   var previousVersion = root.Atlas;
   
-  Atlas.VERSION = '0.2.1';
+  Atlas.VERSION = '0.2.3';
   
   // Set references.
   Atlas.$ = $;
@@ -148,11 +148,9 @@
   
   // Create basic collection item view. Used for displaying a parent collection with nested model views inside.
   Atlas.CollectionItemView = Atlas.View.extend({
-    defaults : {
-      collection : new Backbone.Collection(),
-      itemView : Atlas.ItemCollectionView,
-      children : []
-    },
+    collection : new Backbone.Collection(),
+    itemView : Atlas.ItemCollectionView,
+    children : [],
     clearChildren : function(options) {
       _.each(this.children, function(child, index, children){
         child.close(options);
@@ -165,6 +163,7 @@
       this.collection.each(function (model, index, collection) {
         var view = new parent.itemView({model : model});
         view.render(options);
+        parent.children.push(view);
         parent.$el.append(view.$el);
       });
     },
