@@ -3,7 +3,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright 2008-2014 Ivan Dejanovic and Quine Interactive
+ * Copyright 2008-2015 Ivan Dejanovic and Quine Interactive
  * www.quineinteractive.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining
