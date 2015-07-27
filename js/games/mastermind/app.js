@@ -1,4 +1,6 @@
 (function(root, Atlas) {
+  'use strict';
+
   // Create app object to serve as namespace.
   var app = root.app || {};
 
@@ -26,11 +28,11 @@
       var message = document.getElementById('message');
       var canvas = document.getElementById('board');
 
-      app.gameObj.initialize(canvas, message);
-      app.gameObj.drawBoard();
+      app.gameWrapper.initialize(canvas, message);
+      app.gameWrapper.drawBoard();
     },
     handleBoardClick : function(evt) {
-      app.gameObj.handleBoardClick(evt);
+      app.gameWrapper.handleBoardClick(evt);
     }
   });
 
@@ -84,7 +86,7 @@
   function windowResizeHandler() {
     var canvas = document.getElementById('board');
     if (canvas !== null) {
-      app.gameObj.handleResize();
+      app.gameWrapper.handleResize();
     }
   }
 
