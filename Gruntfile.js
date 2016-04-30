@@ -25,8 +25,8 @@ module.exports = function(grunt) {
     useminPrepare: {
       options: {
         dest: 'build'
-      }/*,
-      html: ['src/*.html']*/
+      },
+      html: ['src/*.html']
     },
     copy: {
       dist: {
@@ -67,8 +67,8 @@ module.exports = function(grunt) {
       options: {
         dirs: ['build'],
         basedir: 'build',
-      }/*,
-      html: ['build/*.html']*/
+      },
+      html: ['build/*.html']
     },
     compress: {
       main: {
